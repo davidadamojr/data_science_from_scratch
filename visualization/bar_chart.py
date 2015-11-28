@@ -1,5 +1,8 @@
 from matplotlib import pyplot as plt
 
+"""Bar charts are a good choice when you want to show how some quantity varies 
+among some discrete set of items"""
+
 movies = ["Annie Hall", "Ben-Hur", "Casablanca", "Gandhi", "West Side Story"]
 num_oscars = [5, 11, 3, 8, 10]
 
