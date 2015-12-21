@@ -1,3 +1,7 @@
+"""
+Graph plot for normal distribution function
+"""
+
 from matplotlib import pyplot as plt
 from distributions import normal_pdf
 
