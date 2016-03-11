@@ -5,7 +5,7 @@ def process(*args):
     pass
 
 with open('tab_delimited_stock_prices.txt', 'rb') as f:
-    reader = csv.reader(f, delimiter='\t')
+    reader = csv.DictReader(f, delimiter='\t')
     for row in reader:
         date = row[0]
         symbol = row[1]
