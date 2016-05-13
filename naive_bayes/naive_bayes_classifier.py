@@ -1,5 +1,6 @@
 from spam_filter import word_probabilities
 from spam_filter import count_words
+from spam_filter import spam_probability
 
 class NaiveBayesClassifier:
     def __init__(self, k=0.5):
@@ -20,5 +21,5 @@ class NaiveBayesClassifier:
                                              num_non_spams,
                                              self.k)
     
-    def classify(self):
+    def classify(self, message):
         return spam_probability(self.word_probs, message)

@@ -1,8 +1,10 @@
 from collections import defaultdict
+import re
+import math
 
 def tokenize(message):
     message = message.lower()               # convert to lowercase
-    all_words = re.findall("[a-z0-9']+")    # extract the words
+    all_words = re.findall("[a-z0-9']+", message)    # extract the words
     return set(all_words)                   # remove duplicates
 
 def count_words(training_set):
