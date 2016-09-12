@@ -1,7 +1,9 @@
 import sys
+import random
 sys.path.insert(0, '../linear_algebra')
 
-from linear_algebra.vector_operations import vector_mean
+from vector_operations import vector_mean
+from vector_operations import squared_distance
 
 class KMeans:
     """performs k-means clustering"""
