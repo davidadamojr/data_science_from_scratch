@@ -32,8 +32,50 @@ def cluster_distance(cluster1, cluster2, distance_agg=min):
                          for input1 in get_values(cluster1)
                          for input2 in get_values(cluster2)])
 
-def get_merge_rder(cluster):
+def get_merge_order(cluster):
     if is_leaf(cluster):
         return float('inf')
     else:
         return cluster[0]           # merge_order is first element of 2-tuple
+
+def bottom_up_cluster(inputs, distance_agg=min):
+    # start with every input a leaf cluster / 1-tuple
+    clusters = [(input,) for input in inputs]
+
+    # as long as we have more than one cluster left...
+    while len(clusters) > 1:
+        # find the two closest clusters
+        c1, c2 =  min([(cluster1, cluster2)
+                       for i, cluster1 in enumerate(clusters)
+                       for cluster2 in clusters[:i]],
+                      key=lambda(x, y): cluster_distance(x, y, distance_agg))
+
+        # remove them from the list of clusters
+        clusters = [c for c in clusters if c != c1 and c != c2]
+
+        # merge them, using merge_order = # of clusters left
+        merged_cluster = (len(clusters), [c1, c2])
+
+        # and add their merge
+        clusters.append(merged_cluster)
+
+    # when there is only one cluster left, return it
+    return clusters[0]
+
+
+if __name__ == '__main__':
+    def generate_clusters(base_cluster, num_clusters):
+        # start with a list with just the base cluster
+        clusters = [base_cluster]
+
+        # as long as we don't have enough clusters yet...
+        while len(clusters) < num_clusters:
+            # choose the last-merged of our clusters
+            next_cluster = min(clusters, key=get_merge_order)
+            # remove it from the list
+            clusters = [c for c in clusters if c != next_cluster]
+            # and add its children to the list (i.e., unmerge it)
+            clusters.extend(get_children(next_cluster))
+
+        # once we have enough clusters..
+        return clusters
