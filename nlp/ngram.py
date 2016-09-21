@@ -46,3 +46,18 @@ for prev, current, next in trigrams:
 
     trigram_transitions[(prev, current)].append(next)
 
+
+def generate_using_trigrams():
+    current = random.choice(starts)                                 # choose a random starting word
+    prev = "."                                                      # and precede it with a '.'
+    result = [current]
+    while True:
+        next_word_candidates = trigram_transitions[(prev, current)]
+        next_word = random.choice(next_word_candidates)
+
+        prev, current = current, next_word
+        result.append(current)
+
+        if current == ".":
+            return " ".join(result)
+
